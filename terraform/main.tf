@@ -138,7 +138,7 @@ resource "aws_iam_role_policy" "lambda_policy" {
           "s3:GetBucketPublicAccessBlock",
           "s3:GetEncryptionConfiguration",
           "s3:PutPublicAccessBlock",
-          "s3:PutEncryptionConfiguration",
+          "s3:PutBucketEncryption",
           "ec2:DescribeSecurityGroups",
           "ec2:DescribeVolumes",
           "ec2:RevokeSecurityGroupIngress",
