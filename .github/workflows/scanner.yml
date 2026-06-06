@@ -66,8 +66,12 @@ jobs:
 
       - name: Deploy to Lambda
         run: |
-          aws lambda update-function-code \
-            --function-name sec-scanner-scanner \
-            --image-uri ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/sec-scanner:latest
-          aws lambda wait function-updated \
-            --function-name sec-scanner-scanner
+          if aws lambda get-function --function-name sec-scanner-scanner 2>/dev/null; then
+            aws lambda update-function-code \
+              --function-name sec-scanner-scanner \
+              --image-uri ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/sec-scanner:latest
+            aws lambda wait function-updated \
+              --function-name sec-scanner-scanner
+          else
+            echo "Lambda function not deployed yet. Run terraform apply first."
+          fi
